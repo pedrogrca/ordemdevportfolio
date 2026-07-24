@@ -39,10 +39,19 @@ export const metadata: Metadata = {
     template: `%s | ${site.name}`,
   },
   description: site.description,
+  // A imagem de compartilhamento (og:image) e injetada automaticamente pelo
+  // arquivo opengraph-image.tsx — nao precisa ser declarada aqui.
   openGraph: {
     type: "website",
     locale: "pt_BR",
     siteName: site.name,
+    title: `${site.name} — ${site.tagline}`,
+    description: site.description,
+  },
+  // "summary_large_image" faz o X/Twitter exibir a imagem grande, e nao a
+  // miniatura quadrada — o mesmo cartao que aparece no WhatsApp.
+  twitter: {
+    card: "summary_large_image",
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
   },

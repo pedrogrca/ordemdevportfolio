@@ -108,4 +108,5 @@ export const navigation = [
   // site esta quebrado.
   // { label: "Equipe", href: "#equipe" },
   { label: "Dúvidas", href: "#faq" },
+  { label: "Contato", href: "#contato" },
 ] as const;

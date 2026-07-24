@@ -6,9 +6,15 @@ import { MobileNav } from "@/components/layout/mobile-nav";
 import { NavLink } from "@/components/layout/nav-link";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { WhatsAppCta } from "@/components/whatsapp-cta";
+import { useActiveSection } from "@/hooks/use-active-section";
 import { useScrolled } from "@/hooks/use-scrolled";
 import { navigation } from "@/lib/site";
 import { cn } from "@/lib/utils";
+
+// Ids das secoes, derivados uma vez no escopo do modulo. Fora do componente de
+// proposito: se o array fosse recriado a cada render, o efeito do observer
+// re-registraria sem necessidade.
+const sectionIds = navigation.map((item) => item.href.replace("#", ""));
 
 /**
  * Header fixo.
@@ -27,6 +33,7 @@ import { cn } from "@/lib/utils";
  */
 export function SiteHeader() {
   const scrolled = useScrolled();
+  const activeId = useActiveSection(sectionIds);
 
   return (
     <header
@@ -45,7 +52,11 @@ export function SiteHeader() {
           aria-label="Navegação principal"
         >
           {navigation.map((item) => (
-            <NavLink key={item.href} href={item.href}>
+            <NavLink
+              key={item.href}
+              href={item.href}
+              active={activeId === item.href.replace("#", "")}
+            >
               {item.label}
             </NavLink>
           ))}
