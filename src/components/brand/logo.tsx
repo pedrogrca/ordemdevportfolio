@@ -20,7 +20,7 @@ export function Logo({
   return (
     <Link
       href={href}
-      aria-label={`${site.name} — pagina inicial`}
+      aria-label={`${site.name} — página inicial`}
       className={cn(
         "group inline-flex items-center gap-2.5 rounded-md",
         "transition-opacity hover:opacity-80",
