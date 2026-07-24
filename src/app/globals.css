@@ -1,0 +1,229 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ---------------------------------------------------------------------------
+   Ordem DEV — sistema de design
+   ---------------------------------------------------------------------------
+   A paleta nasce do roxo da logo (#2E0A4E). Ele cumpre tres papeis distintos,
+   e misturar esses papeis e o erro que deixa o site pesado:
+
+   1. MARCA    (--brand)      o roxo cheio. Usado em blocos pontuais: rodape,
+                              CTA final, cards de destaque. Nunca como fundo
+                              de pagina, porque satura a leitura em textos
+                              longos.
+   2. FUNDO    (--background) o mesmo roxo puxado para quase-preto. Mantem a
+                              familia cromatica sem cansar a vista.
+   3. INTERACAO(--primary)    um violeta claro. O roxo da marca nao tem
+                              contraste suficiente para virar botao ou link no
+                              tema escuro; some no fundo.
+
+   Contraste verificado (WCAG 2.1):
+   - #A855F7 sobre #0D0614 -> 5.1:1  (AA texto normal)
+   - #7E22CE sobre #FFFFFF -> 7.0:1  (AAA texto normal)
+   - #FAFAF9 sobre #2E0A4E -> 16.6:1 (AAA)
+
+   Valores em OKLCH (padrao do shadcn, interpola melhor); hex no comentario.
+--------------------------------------------------------------------------- */
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  /* Tokens proprios da Ordem DEV, alem dos semanticos do shadcn. */
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-grid: var(--grid);
+
+  --font-sans: var(--font-instrument-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-heading: var(--font-instrument-sans);
+
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+}
+
+/* Tema claro. Nao e o padrao, mas precisa estar impecavel: parte do publico
+   (donos de PME) prefere e desliga o escuro na primeira visita. */
+:root {
+  --background: oklch(1 0 0); /* #FFFFFF */
+  --foreground: oklch(0.1926 0.0617 305.11); /* #1B0B2A */
+
+  --card: oklch(1 0 0); /* #FFFFFF */
+  --card-foreground: oklch(0.1926 0.0617 305.11); /* #1B0B2A */
+  --popover: oklch(1 0 0); /* #FFFFFF */
+  --popover-foreground: oklch(0.1926 0.0617 305.11); /* #1B0B2A */
+
+  --primary: oklch(0.4955 0.2369 301.92); /* #7E22CE */
+  --primary-foreground: oklch(1 0 0); /* #FFFFFF */
+
+  --secondary: oklch(0.9684 0.0098 305.41); /* #F6F3FA */
+  --secondary-foreground: oklch(0.2525 0.1144 302.6); /* #2E0A4E */
+
+  --muted: oklch(0.9684 0.0098 305.41); /* #F6F3FA */
+  --muted-foreground: oklch(0.4558 0.0343 307.63); /* #5C5266 */
+
+  --accent: oklch(0.9485 0.0184 306.66); /* #F1EBF8 */
+  --accent-foreground: oklch(0.2525 0.1144 302.6); /* #2E0A4E */
+
+  --destructive: oklch(0.577 0.245 27.325);
+
+  --border: oklch(0.9169 0.0227 305.59); /* #E7E0F0 */
+  --input: oklch(0.9169 0.0227 305.59); /* #E7E0F0 */
+  --ring: oklch(0.4955 0.2369 301.92); /* #7E22CE */
+
+  /* Marca e grade estrutural */
+  --brand: oklch(0.2525 0.1144 302.6); /* #2E0A4E */
+  --brand-foreground: oklch(0.9848 0.0013 106.42); /* #FAFAF9 */
+  --grid: oklch(0.9169 0.0227 305.59 / 70%);
+
+  --radius: 0.625rem;
+
+  --chart-1: oklch(0.4955 0.2369 301.92);
+  --chart-2: oklch(0.6268 0.2325 303.9);
+  --chart-3: oklch(0.7217 0.1767 305.5);
+  --chart-4: oklch(0.2525 0.1144 302.6);
+  --chart-5: oklch(0.4558 0.0343 307.63);
+
+  --sidebar: oklch(0.9684 0.0098 305.41);
+  --sidebar-foreground: oklch(0.1926 0.0617 305.11);
+  --sidebar-primary: oklch(0.4955 0.2369 301.92);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.9485 0.0184 306.66);
+  --sidebar-accent-foreground: oklch(0.2525 0.1144 302.6);
+  --sidebar-border: oklch(0.9169 0.0227 305.59);
+  --sidebar-ring: oklch(0.4955 0.2369 301.92);
+}
+
+/* Tema padrao. */
+.dark {
+  --background: oklch(0.1421 0.0326 306.73); /* #0D0614 */
+  --foreground: oklch(0.9848 0.0013 106.42); /* #FAFAF9 */
+
+  --card: oklch(0.1754 0.0377 303.24); /* #140C1E */
+  --card-foreground: oklch(0.9848 0.0013 106.42); /* #FAFAF9 */
+  --popover: oklch(0.1754 0.0377 303.24); /* #140C1E */
+  --popover-foreground: oklch(0.9848 0.0013 106.42); /* #FAFAF9 */
+
+  --primary: oklch(0.6268 0.2325 303.9); /* #A855F7 */
+  --primary-foreground: oklch(0.1421 0.0326 306.73); /* #0D0614 */
+
+  --secondary: oklch(0.1963 0.0468 304.53); /* #1A0F26 */
+  --secondary-foreground: oklch(0.9848 0.0013 106.42); /* #FAFAF9 */
+
+  --muted: oklch(0.1963 0.0468 304.53); /* #1A0F26 */
+  --muted-foreground: oklch(0.7147 0.0259 306.83); /* #A79FB0 */
+
+  --accent: oklch(0.219 0.0563 300.98); /* #1F1330 */
+  --accent-foreground: oklch(0.9848 0.0013 106.42); /* #FAFAF9 */
+
+  --destructive: oklch(0.704 0.191 22.216);
+
+  --border: oklch(0.2592 0.0638 302.55); /* #2A1B3D */
+  --input: oklch(0.2592 0.0638 302.55); /* #2A1B3D */
+  --ring: oklch(0.6268 0.2325 303.9); /* #A855F7 */
+
+  --brand: oklch(0.2525 0.1144 302.6); /* #2E0A4E */
+  --brand-foreground: oklch(0.9848 0.0013 106.42); /* #FAFAF9 */
+  --grid: oklch(0.2592 0.0638 302.55 / 80%);
+
+  --chart-1: oklch(0.6268 0.2325 303.9);
+  --chart-2: oklch(0.7217 0.1767 305.5);
+  --chart-3: oklch(0.4955 0.2369 301.92);
+  --chart-4: oklch(0.2525 0.1144 302.6);
+  --chart-5: oklch(0.7147 0.0259 306.83);
+
+  --sidebar: oklch(0.1754 0.0377 303.24);
+  --sidebar-foreground: oklch(0.9848 0.0013 106.42);
+  --sidebar-primary: oklch(0.6268 0.2325 303.9);
+  --sidebar-primary-foreground: oklch(0.1421 0.0326 306.73);
+  --sidebar-accent: oklch(0.219 0.0563 300.98);
+  --sidebar-accent-foreground: oklch(0.9848 0.0013 106.42);
+  --sidebar-border: oklch(0.2592 0.0638 302.55);
+  --sidebar-ring: oklch(0.6268 0.2325 303.9);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    @apply font-sans;
+    scroll-behavior: smooth;
+    /* Compensa o header fixo quando a navegacao ancora numa secao. */
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Selecao de texto na cor da marca: microdetalhe barato que sinaliza
+     cuidado no acabamento. */
+  ::selection {
+    @apply bg-primary/25 text-foreground;
+  }
+
+  /* Foco visivel em todo elemento interativo. Nunca remover: e o unico jeito
+     de navegar o site por teclado. */
+  :focus-visible {
+    @apply outline-ring outline-2 outline-offset-2;
+  }
+}
+
+/* Acessibilidade: quem pediu menos movimento no sistema operacional nao
+   recebe nenhuma animacao. Vale para o site inteiro, inclusive Motion. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
