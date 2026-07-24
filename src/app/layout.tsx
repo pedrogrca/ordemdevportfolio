@@ -5,7 +5,7 @@ import { SiteFooter } from "@/components/layout/site-footer";
 import { SiteHeader } from "@/components/layout/site-header";
 import { SkipLink } from "@/components/layout/skip-link";
 import { ThemeProvider } from "@/components/theme-provider";
-import { site } from "@/lib/site";
+import { isIndexable, site } from "@/lib/site";
 
 import "./globals.css";
 
@@ -46,7 +46,8 @@ export const metadata: Metadata = {
     title: `${site.name} — ${site.tagline}`,
     description: site.description,
   },
-  robots: { index: true, follow: true },
+  // Liberado apenas no dominio definitivo. Ver `isIndexable` em lib/site.
+  robots: { index: isIndexable, follow: isIndexable },
 };
 
 export const viewport: Viewport = {
