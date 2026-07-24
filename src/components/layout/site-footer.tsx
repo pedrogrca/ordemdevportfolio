@@ -1,4 +1,4 @@
-import { Mail } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 
 import { LogoMark } from "@/components/brand/logo-mark";
 import { socialIcons, WhatsAppIcon } from "@/components/icons/brand-icons";
@@ -116,8 +116,13 @@ export function SiteFooter() {
             &copy; {new Date().getFullYear()} {site.legalName}. Todos os
             direitos reservados.
           </p>
-          <p className="font-mono tracking-[0.14em]">
-            ORDEM · TECNOLOGIA · EVOLUÇÃO
+          {/* Trocou o antigo "ORDEM · TECNOLOGIA · EVOLUÇÃO", que era enfeite.
+              A cidade e informacao de verdade: cliente da regiao percebe que
+              tem alguem por perto, e mesmo o de fora prefere saber com quem
+              esta falando a ler tres palavras bonitas. */}
+          <p className="flex items-center gap-1.5">
+            <MapPin className="size-3.5 shrink-0" aria-hidden="true" />
+            Feito em Natal, RN
           </p>
         </div>
       </Container>

@@ -69,6 +69,16 @@ export default function RootLayout({
       className={`${instrumentSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
+        {/* Rede de seguranca das animacoes de entrada.
+            O Motion escreve o estado inicial (opacidade zero) direto no HTML
+            do servidor e so o remove quando o JavaScript assume. Se o script
+            nao carregar — rede ruim, bloqueador, erro em producao — a pagina
+            chegaria em branco. Esta regra so entra em vigor quando nao ha
+            JavaScript, e devolve o conteudo por inteiro. */}
+        <noscript>
+          <style>{`[data-reveal]{opacity:1!important;transform:none!important}`}</style>
+        </noscript>
+
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"
