@@ -53,6 +53,12 @@ export type Project = {
    * ganha forca justamente por poder ser aberto e testado na hora.
    */
   links?: { label: string; href: string }[];
+  /**
+   * Capturas de tela. A primeira vira a capa do card na home; todas aparecem
+   * na galeria da pagina de caso. So entra print sem dado real de terceiro —
+   * as do Elo usam os dados ficticios de demonstracao do proprio app.
+   */
+  screenshots?: { src: string; alt: string }[];
 };
 
 export const projects: Project[] = [
@@ -137,11 +143,27 @@ export const projects: Project[] = [
     ],
     links: [
       {
+        label: "Abrir demonstração",
+        href: "https://elopotiguar.vercel.app/#/",
+      },
+      {
         label: "Ver no GitHub",
         href: "https://github.com/pedrogrca/elopotiguar",
       },
-      // TODO: adicionar a URL da demonstracao ao vivo quando houver — um
-      // projeto que da para abrir e testar convence muito mais que descricao.
+    ],
+    screenshots: [
+      {
+        src: "/projetos/elo-potiguar/home-desktop.webp",
+        alt: "Tela inicial do Elo Potiguar, com as organizações prioritárias por vulnerabilidade e os números da plataforma.",
+      },
+      {
+        src: "/projetos/elo-potiguar/organizacoes.webp",
+        alt: "Diretório de organizações do Elo Potiguar, com busca, filtro por causa e selo de credibilidade em cada card.",
+      },
+      {
+        src: "/projetos/elo-potiguar/home-mobile.webp",
+        alt: "Tela inicial do Elo Potiguar no celular, mostrando o layout responsivo.",
+      },
     ],
   },
 ];

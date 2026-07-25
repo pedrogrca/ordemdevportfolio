@@ -1,16 +1,20 @@
+import Image from "next/image";
+
 import { LogoMark } from "@/components/brand/logo-mark";
 import { cn } from "@/lib/utils";
 
 /**
  * Capa do projeto.
  *
- * Enquanto nao houver print liberado, a capa e uma composicao da propria
- * marca — grade e espiral. A alternativa seria um mockup generico de painel,
- * com graficos falsos e nomes inventados, e isso e reconhecivel a distancia:
- * comunica "nao temos o que mostrar" com mais forca do que um espaco honesto.
+ * Com uma captura de tela, mostra o print (alinhado ao topo, para aparecer o
+ * cabecalho e o inicio da tela — a parte mais reconhecivel). Sem print, cai
+ * numa composicao da propria marca (grade + espiral), que e melhor que um
+ * mockup generico de painel: um mockup falso comunica "nao temos o que
+ * mostrar" com mais forca do que um espaco honesto.
  *
- * Quando houver imagem liberada (com dado sensivel ja substituido), basta
- * passar `src` e a composicao sai de cena.
+ * Usa next/image para ganhar carregamento tardio e otimizacao de tamanho sem
+ * esforco — a secao fica abaixo da dobra, entao nunca precisa carregar antes
+ * do necessario.
  */
 export function ProjectCover({
   label,
@@ -26,15 +30,20 @@ export function ProjectCover({
 }) {
   if (src) {
     return (
-      // eslint-disable-next-line @next/next/no-img-element -- trocar por next/image quando existir print real com dimensoes conhecidas
-      <img
-        src={src}
-        alt={alt ?? ""}
+      <div
         className={cn(
-          "aspect-16/10 w-full rounded-2xl border object-cover",
+          "relative aspect-16/10 w-full overflow-hidden rounded-2xl border bg-muted",
           className,
         )}
-      />
+      >
+        <Image
+          src={src}
+          alt={alt ?? ""}
+          fill
+          sizes="(max-width: 1024px) 100vw, 600px"
+          className="object-cover object-top"
+        />
+      </div>
     );
   }
 

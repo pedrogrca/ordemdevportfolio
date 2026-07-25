@@ -98,7 +98,12 @@ function FeaturedProject({
             imageOnLeft ? "lg:order-1 lg:pr-0" : "lg:order-2 lg:pl-0",
           )}
         >
-          <ProjectCover label={project.categories[0]} className="h-full" />
+          <ProjectCover
+            label={project.categories[0]}
+            src={project.screenshots?.[0]?.src}
+            alt={project.screenshots?.[0]?.alt}
+            className="h-full"
+          />
         </div>
       </div>
     </article>

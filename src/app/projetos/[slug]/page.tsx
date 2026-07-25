@@ -1,5 +1,6 @@
 import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -125,8 +126,36 @@ export default async function ProjectPage({
         </ul>
 
         <div className="mt-10">
-          <ProjectCover label={project.categories[0]} />
+          <ProjectCover
+            label={project.categories[0]}
+            src={project.screenshots?.[0]?.src}
+            alt={project.screenshots?.[0]?.alt}
+          />
         </div>
+
+        {/* Demais telas. A primeira ja e a capa acima, entao a galeria mostra
+            da segunda em diante — sem repetir a imagem de topo. */}
+        {project.screenshots && project.screenshots.length > 1 && (
+          <div className="mt-4 grid gap-4 sm:grid-cols-2">
+            {project.screenshots.slice(1).map((shot) => (
+              <div
+                key={shot.src}
+                className="relative aspect-16/10 w-full overflow-hidden rounded-2xl border bg-muted"
+              >
+                <Image
+                  src={shot.src}
+                  alt={shot.alt}
+                  fill
+                  sizes="(max-width: 640px) 100vw, 400px"
+                  // "contain" e nao "cover": a galeria inclui um print de
+                  // celular, alto e estreito, que seria decapitado por "cover".
+                  // Assim a tela aparece inteira, centralizada.
+                  className="object-contain p-3"
+                />
+              </div>
+            ))}
+          </div>
+        )}
 
         <div className="mt-12">
           <Bloco label="O DESAFIO">
@@ -181,8 +210,16 @@ export default async function ProjectPage({
           {project.links && project.links.length > 0 && (
             <Bloco label="LINKS">
               <div className="flex flex-wrap gap-3">
-                {project.links.map((link) => (
-                  <Button key={link.href} asChild variant="outline" size="lg">
+                {project.links.map((link, index) => (
+                  <Button
+                    key={link.href}
+                    asChild
+                    size="lg"
+                    // O primeiro link (a demonstracao ao vivo) recebe o botao
+                    // cheio: abrir e testar o projeto na hora e a acao mais
+                    // convincente, entao ela ganha o destaque visual.
+                    variant={index === 0 ? "default" : "outline"}
+                  >
                     <a
                       href={link.href}
                       target="_blank"
@@ -200,13 +237,13 @@ export default async function ProjectPage({
 
         <div className="mt-6 rounded-2xl border bg-card p-8 text-center">
           <p className="text-xl font-medium tracking-tight text-balance">
-            Tem um processo que ainda roda na planilha?
+            Tem uma ideia parecida em mente?
           </p>
           <p className="mx-auto mt-3 max-w-md text-sm text-muted-foreground text-pretty">
-            Conta o que trava o seu dia a dia. Se a gente puder ajudar, monta
+            Conta o que você precisa resolver. Se a gente puder ajudar, monta
             uma proposta; se não puder, diz na hora.
           </p>
-          <WhatsAppCta className="mt-6">Conversar sobre meu caso</WhatsAppCta>
+          <WhatsAppCta className="mt-6">Conversar com a gente</WhatsAppCta>
         </div>
       </Container>
     </main>
