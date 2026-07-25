@@ -7,25 +7,40 @@ import { ProjectCover } from "@/components/projects/project-cover";
 import { ProjectStatusBadge } from "@/components/projects/project-status-badge";
 import { clientLabel, projects, type Project } from "@/content/projects";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 /**
  * Projetos.
  *
- * Com um unico case, grade de cards e a escolha errada: um card sozinho numa
- * grade de tres colunas anuncia as duas vagas vazias. O formato aqui e o
- * oposto — um case em destaque, largo, contando a historia inteira. Um caso
- * bem contado convence mais que tres listados.
+ * Dois cases, cada um em formato largo e completo, empilhados. Continua sendo
+ * o oposto de uma grade de cards: com poucos projetos, grade anuncia as vagas
+ * vazias, enquanto o formato largo dedica espaco a contar cada historia por
+ * inteiro. Um caso bem contado convence mais que varios listados.
  *
- * A ordem do texto e desafio -> solucao, e nao "o que construimos". O
+ * A ordem do texto e sempre desafio -> solucao, nao "o que construimos": o
  * visitante precisa reconhecer o proprio problema antes de se importar com a
- * solucao.
+ * solucao de outra pessoa.
+ *
+ * A imagem alterna de lado entre os cases (esquerda/direita) para dar ritmo a
+ * pilha e ela nao parecer dois blocos identicos empilhados.
  */
 
-function FeaturedProject({ project }: { project: Project }) {
+function FeaturedProject({
+  project,
+  imageOnLeft,
+}: {
+  project: Project;
+  imageOnLeft: boolean;
+}) {
   return (
     <article className="overflow-hidden rounded-2xl border bg-card">
       <div className="grid lg:grid-cols-2">
-        <div className="order-2 flex flex-col p-6 sm:p-10 lg:order-1">
+        <div
+          className={cn(
+            "order-2 flex flex-col p-6 sm:p-10",
+            imageOnLeft ? "lg:order-2 lg:pl-0" : "lg:order-1",
+          )}
+        >
           <div className="flex flex-wrap items-center gap-3">
             <ProjectStatusBadge status={project.status} />
             <span className="font-mono text-[0.6875rem] tracking-[0.18em] text-muted-foreground">
@@ -77,7 +92,12 @@ function FeaturedProject({ project }: { project: Project }) {
           </div>
         </div>
 
-        <div className="order-1 p-6 sm:p-10 lg:order-2 lg:pl-0">
+        <div
+          className={cn(
+            "order-1 p-6 sm:p-10",
+            imageOnLeft ? "lg:order-1 lg:pr-0" : "lg:order-2 lg:pl-0",
+          )}
+        >
           <ProjectCover label={project.categories[0]} className="h-full" />
         </div>
       </div>
@@ -86,19 +106,21 @@ function FeaturedProject({ project }: { project: Project }) {
 }
 
 export function Projects() {
-  const [featured] = projects;
-
   return (
     <Section
       id="projetos"
       index="02"
       label="PROJETOS"
-      title="Um cliente, um problema real"
-      description="Estamos começando, e preferimos mostrar um caso por inteiro a listar trabalho que não existe. Esta página cresce conforme os projetos avançam."
+      title="O que já construímos"
+      description="Um sistema comercial para um cliente real e uma plataforma social feita em hackathon. Dois problemas diferentes, a mesma forma de trabalhar."
     >
-      <Reveal>
-        <FeaturedProject project={featured} />
-      </Reveal>
+      <div className="space-y-4">
+        {projects.map((project, index) => (
+          <Reveal key={project.slug} delay={index * 0.05}>
+            <FeaturedProject project={project} imageOnLeft={index % 2 === 1} />
+          </Reveal>
+        ))}
+      </div>
     </Section>
   );
 }

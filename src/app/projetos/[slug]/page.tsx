@@ -1,4 +1,4 @@
-import { ArrowLeft, Check } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, Check } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { Container } from "@/components/layout/container";
 import { ProjectCover } from "@/components/projects/project-cover";
 import { ProjectStatusBadge } from "@/components/projects/project-status-badge";
+import { Button } from "@/components/ui/button";
 import { WhatsAppCta } from "@/components/whatsapp-cta";
 import { clientLabel, projects, projectsBySlug } from "@/content/projects";
 
@@ -140,10 +141,17 @@ export default async function ProjectPage({
             <ListaComCheck itens={project.features} />
           </Bloco>
 
-          <Bloco label="IMPACTO ESPERADO">
-            {/* "Esperado", nao "alcancado": o projeto ainda esta em
-                desenvolvimento e nao ha medicao. A ressalva abaixo deixa isso
-                explicito para ninguem ler a lista como resultado entregue. */}
+          {/* O rotulo muda com o status. Em projeto ainda em andamento sao
+              "objetivos esperados", com ressalva; em projeto entregue sao os
+              destaques do que ele ja faz — chamar de "esperado" algo pronto
+              soaria falso. */}
+          <Bloco
+            label={
+              project.status === "em-desenvolvimento"
+                ? "IMPACTO ESPERADO"
+                : "DESTAQUES DO PROJETO"
+            }
+          >
             <ListaComCheck itens={project.expectedImpact} />
             {project.status === "em-desenvolvimento" && (
               <p className="mt-5 rounded-xl border border-border/60 bg-muted/50 p-4 text-sm text-muted-foreground">
@@ -167,6 +175,25 @@ export default async function ProjectPage({
                   </li>
                 ))}
               </ul>
+            </Bloco>
+          )}
+
+          {project.links && project.links.length > 0 && (
+            <Bloco label="LINKS">
+              <div className="flex flex-wrap gap-3">
+                {project.links.map((link) => (
+                  <Button key={link.href} asChild variant="outline" size="lg">
+                    <a
+                      href={link.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {link.label}
+                      <ArrowUpRight />
+                    </a>
+                  </Button>
+                ))}
+              </div>
             </Bloco>
           )}
         </div>

@@ -39,10 +39,20 @@ export type Project = {
   challenge: string;
   solution: string;
   features: string[];
-  /** Expectativas acordadas com o cliente, nao medicoes. */
+  /**
+   * Em projeto ainda em desenvolvimento, sao expectativas acordadas (nunca
+   * medicoes). Em projeto entregue, sao os destaques do que ele ja faz. O
+   * rotulo do bloco muda conforme o status — ver a pagina de caso.
+   */
   expectedImpact: string[];
-  /** Vazio ate a equipe confirmar. Melhor omitir do que inventar. */
+  /** Vazio ate haver confirmacao. Melhor omitir do que inventar. */
   technologies: string[];
+  /**
+   * Links externos (repositorio, demonstracao ao vivo). Opcional: um projeto
+   * de cliente sob sigilo nao tem link publico; um projeto proprio e aberto
+   * ganha forca justamente por poder ser aberto e testado na hora.
+   */
+  links?: { label: string; href: string }[];
 };
 
 export const projects: Project[] = [
@@ -82,6 +92,57 @@ export const projects: Project[] = [
       "Acompanhamento dos resultados por vendedor",
     ],
     technologies: [],
+  },
+  {
+    slug: "elo-potiguar",
+    title: "Elo Potiguar — doações e voluntariado",
+    summary:
+      "Uma plataforma que conecta doadores e voluntários a organizações sociais, com acompanhamento da doação em tempo real — no estilo de um aplicativo de entrega — e transparência do começo ao fim.",
+    status: "entregue",
+    year: "2026",
+    client: {
+      name: "",
+      // Projeto proprio, feito num hackathon — nao ha cliente. O rotulo deixa
+      // isso explicito: e iniciativa da equipe, nao trabalho contratado.
+      segment: "Projeto de hackathon",
+      namePublic: false,
+    },
+    categories: ["Plataforma web", "Impacto social", "Tempo real"],
+    challenge:
+      "Quem doa raramente sabe se o recurso chegou a quem precisava. E quem quer se voluntariar nem sempre encontra a organização certa para as próprias habilidades. Essa distância — falta de transparência de um lado, dificuldade de encontro do outro — faz muita gente desistir de ajudar.",
+    solution:
+      "Uma plataforma que aproxima os dois lados e mostra cada passo. Um algoritmo sugere oportunidades de voluntariado por habilidade, causa e proximidade, e prioriza as organizações mais vulneráveis. A doação tem uma linha do tempo pública (recebido, em estoque, usado), e quem doa pode acompanhar a entrega ao vivo num mapa, com código de segurança na coleta e na entrega — o mesmo modelo dos aplicativos de comida.",
+    features: [
+      "Cadastro com múltiplos papéis (doador, voluntário, entregador, organização)",
+      "Sugestão de voluntariado por habilidade, causa e localização",
+      "Linha do tempo pública da doação, do recebimento ao uso",
+      "Acompanhamento da entrega ao vivo no mapa, com GPS",
+      "Códigos de segurança na coleta e na entrega",
+      "Pontos de confiança e ranking público das organizações",
+      "Transparência financeira, com detalhamento de cada gasto",
+      "Notificações em tempo real entre os participantes",
+    ],
+    expectedImpact: [
+      "Doação acompanhada de ponta a ponta, sem caixa-preta",
+      "Encontro mais rápido entre quem quer ajudar e quem precisa",
+      "Organizações mais transparentes ganham mais visibilidade",
+      "Entrega rastreada ao vivo, como num aplicativo de comida",
+    ],
+    // Verificaveis no proprio repositorio e na documentacao do projeto.
+    technologies: [
+      "JavaScript",
+      "Leaflet / OpenStreetMap",
+      "Geolocation API",
+      "Supabase (Postgres + Realtime)",
+    ],
+    links: [
+      {
+        label: "Ver no GitHub",
+        href: "https://github.com/pedrogrca/elopotiguar",
+      },
+      // TODO: adicionar a URL da demonstracao ao vivo quando houver — um
+      // projeto que da para abrir e testar convence muito mais que descricao.
+    ],
   },
 ];
 
